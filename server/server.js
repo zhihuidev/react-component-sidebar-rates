@@ -41,6 +41,12 @@ app.use(express.static('../dist'))
 app.use('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 })
+
+// app.get('*', (req, res) => {
+//   res.write(fs.readFileSync(path.resolve(__dirname, '../dist', 'index.html')))
+//   res.end()
+// })
+
 // app.get('*', (req, res) => {
 //   res.write(devMiddleware.fileSystem.readFileSync(path.resolve(__dirname, '../dist', 'index.html')))
 //   res.end()
