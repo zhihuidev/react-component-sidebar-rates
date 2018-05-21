@@ -3,7 +3,7 @@ import fs from 'fs'
 import express from 'express'
 
 const webpack = require('webpack')
-const webpackMiddleware = require('webpack-dev-middleware')
+const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const historyApiFallback = require('connect-history-api-fallback')
 const config = require('../webpack.development.config.js')
@@ -20,10 +20,8 @@ app.use((req, res, next) => {
 app.use(historyApiFallback({
   verbose: false
 }))
-const middleware = webpackMiddleware(compiler, {
+const devMiddleware = webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
-  // contentBase: 'src',
-  // hot: true,
   quiet: false,
   noInfo: false,
   lazy: false,
@@ -36,12 +34,17 @@ const middleware = webpackMiddleware(compiler, {
     modules: false
   }
 })
-app.use(middleware)
+app.use(devMiddleware)
 app.use(webpackHotMiddleware(compiler))
-app.get('*', (req, res) => {
-  res.write(fs.readFileSync(path.resolve(__dirname, '../dist', 'index.html')))
-  res.end()
+
+app.use(express.static('../dist'))
+app.use('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 })
+// app.get('*', (req, res) => {
+//   res.write(devMiddleware.fileSystem.readFileSync(path.resolve(__dirname, '../dist', 'index.html')))
+//   res.end()
+// })
 
 app.listen(port, error => {
   if (error) {

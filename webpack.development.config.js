@@ -2,10 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+  devtool: 'inline-source-map',
   entry: {
     main: [
       'webpack/hot/dev-server',
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?reload=true',
       path.join(__dirname, 'src/index.js')
     ]
   },
@@ -13,10 +14,12 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: ''
+    publicPath: '/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     rules: [
