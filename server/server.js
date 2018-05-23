@@ -6,7 +6,7 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const historyApiFallback = require('connect-history-api-fallback')
-const config = require('../webpack.development.config.js')
+const config = require('../webpack.dev.config.js')
 const compiler = webpack(config)
 
 const port = 3004
