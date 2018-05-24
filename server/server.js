@@ -56,6 +56,5 @@ app.listen(port, error => {
   if (error) {
     console.log(error)
   }
-  console.info('==> 🐸 Listening on port %s.', port)
+  console.info('==> Exciting! 🐸 +1s! Listening on port %s.', port)
 })
-
